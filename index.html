@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Curso Executivo de Gestão de KPIs em F&B - Autor: Luis Cesar</title>
+  <style>
+    :root {
+      --bg-dark: #0f172a;
+      --card-bg: #1e293b;
+      --accent: #0ea5e9;
+      --accent-hover: #0284c7;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .slide-container {
+      width: 100%;
+      max-width: 1100px;
+      min-height: 620px;
+      background-color: var(--card-bg);
+      border-radius: 16px;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .slide {
+      display: none;
+      padding: 40px 50px;
+      height: 100%;
+      flex-direction: column;
+      justify-content: space-between;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .slide.active {
+      display: flex;
+    }
+
+    .slide-header {
+      border-bottom: 2px solid #334155;
+      padding-bottom: 15px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .slide-header h2 {
+      color: var(--accent);
+      font-size: 1.8rem;
+    }
+
+    .badge {
+      background-color: #334155;
+      color: var(--accent);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .slide-body {
+      flex: 1;
+      display: flex;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .content-text {
+      flex: 1;
+      font-size: 1.05rem;
+      line-height: 1.6;
+      color: #cbd5e1;
+    }
+
+    .content-media {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .content-media img {
+      width: 100%;
+      max-height: 320px;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+    }
+
+    .formula-box {
+      background-color: #0f172a;
+      border-left: 4px solid var(--accent);
+      padding: 15px 20px;
+      margin: 15px 0;
+      border-radius: 0 8px 8px 0;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 1.05rem;
+      color: #e2e8f0;
+    }
+
+    .example-box {
+      background-color: #1a2e3b;
+      border: 1px solid #0284c7;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 10px;
+      font-size: 0.95rem;
+    }
+
+    .example-box strong {
+      color: var(--accent);
+    }
+
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 50px;
+      background-color: #0f172a;
+      border-top: 1px solid #334155;
+    }
+
+    .btn {
+      background-color: var(--accent);
+      color: #0f172a;
+      border: none;
+      padding: 10px 24px;
+      font-size: 1rem;
+      font-weight: 700;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn:hover {
+      background-color: var(--accent-hover);
+      transform: translateY(-1px);
+    }
+
+    .btn:disabled {
+      background-color: #334155;
+      color: #64748b;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .indicator {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .author-tag {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 0.9rem;
+    }
+
+    th, td {
+      padding: 8px 12px;
+      border: 1px solid #334155;
+      text-align: left;
+    }
+
+    th {
+      background-color: #0f172a;
+      color: var(--accent);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="slide-container">
+    
+    <!-- Slide 1: Capa -->
+    <div class="slide active">
+      <div class="slide-header">
+        <h2>Gestão Executiva de KPIs em F&B</h2>
+        <span class="badge">Apresentação do Curso</span>
+      </div>
+      <div class="slide-body">
+        <div class="content-text">
+          <h1 style="font-size: 2.2rem; color: #fff; margin-bottom: 15px;">Monitoramento Operacional para Pizzarias, Petiscarias e Bares</h1>
+          <p>Um guia completo para gestão baseada em dados, controle de margens e otimização de performance em grupo multi-conceito de alimentação e bebidas.</p>
+          <div style="margin-top: 30px; border-top: 1px solid #334155; padding-top: 15px;">
+            <p><strong>Autor do Curso:</strong> Luis Cesar Silva Martins</p>
+            <p style="font-size: 0.9rem; color: var(--text-muted);">Especialista em Engenharia de Operações & Indicadores de Gestão</p>
+          </div>
+        </div>
+        <div class="content-media">
+          <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=800&q=80" alt="Gestão de Restaurante">
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 2: O que é F&B e Conceitos Iniciais -->
+    <div class="slide">
+      <div class="slide-header">
+        <h2>Módulo 1: Conceitos Fundamentais</h2>
+        <span class="badge">O que é F&B?</span>
+      </div>
+      <div class="slide-body">
+        <div class="content-text">
+          <p><strong>F&B</strong> é a sigla para <em>Food & Beverage</em> (Alimentos e Bebidas — A&B). No mercado de gastronomia e entretenimento, engloba toda a cadeia de valor envolvida no preparo, serviço e venda de refeições e bebidas.</p>
+          
+          <div class="example-box">
+            <p><strong>Termos Essenciais do Setor:</strong></p>
+            <ul style="margin-left: 20px; margin-top: 5px;">
+              <li><strong>FIFO / PEPS:</strong> <em>First In, First Out</em> — Traduzido como <strong>Primeiro que Entra, Primeiro que Sai</strong>. Regra de rotação de estoque para evitar vencimentos.</li>
+              <li><strong>Passador / KDS:</strong> Monitor de expedição de pedidos da cozinha.</li>
+              <li><strong>Ficha Técnica:</strong> Cadastro exato com peso, custo e modo de preparo de cada item do cardápio.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="content-media">
+          <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=800&q=80" alt="Cozinha Profissional">
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 3: Métrica Primária - Variação de CMV -->
+    <div class="slide">
+      <div class="slide-header">
+        <h2>Módulo 2: A Métrica Primária (North Star)</h2>
+        <span class="badge">Variação de CMV</span>
+      </div>
+      <div class="slide-body" style="flex-direction: column; align-items: stretch;">
+        <div class="content-text">
+          <p>O <strong>CMV (Custo de Mercadoria Vendida)</strong> indica a proporção do faturamento gasta em matéria-prima. A <strong>Variação de CMV</strong> mede a diferença entre o consumo previsto em ficha técnica (Teórico) e o gasto real de estoque (Real).</p>
+          
+          <div class="formula-box">
+            Fórmula: Variação CMV (R$) = CMV Real (R$) - CMV Teórico (R$)
+          </div>
+
+          <div class="example-box">
+            <p><strong>Exemplo Prático com Números Reais:</strong></p>
+            <p>• Faturamento do Mês: <strong>R$ 100.000,00</strong></p>
+            <p>• CMV Teórico (Fichas Técnicas): 28% → <strong>R$ 28.000,00</strong></p>
+            <p>• CMV Real (Inventário do Estoque): 31% → <strong>R$ 31.000,00</strong></p>
+            <p>• <strong>Resultado da Variação:</strong> R$ 31.000 - R$ 28.000 = <strong style="color: var(--danger);">+ R$ 3.000,00 (Prejuízo/Desvio de 10,7%)</strong></p>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;"><em>Causas comuns: porcionamento incorreto, erros de lançamento, roubos ou desperdício de insumos.</em></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 4: Prime Cost e Margem Bruta -->
+    <div class="slide">
+      <div class="slide-header">
+        <h2>Módulo 3: Saúde Financeira Global</h2>
+        <span class="badge">Prime Cost & Margem Bruta</span>
+      </div>
+      <div class="slide-body" style="flex-direction: column; align-items: stretch;">
+        <div class="content-text">
+          <div class="formula-box">
+            Prime Cost (%) = [ (CMV Total + Custo Mão de Obra) / Faturamento Bruto ] x 100
+          </div>
+
+          <div class="example-box">
+            <p><strong>Exemplo Prático - Prime Cost:</strong></p>
+            <p>• Faturamento Mensal: <strong>R$ 120.000,00</strong></p>
+            <p>• CMV Total (Insumos): <strong>R$ 36.000,00</strong> (30%)</p>
+            <p>• Custo de Pessoal (Salários, Encargos, Benefícios): <strong>R$ 30.000,00</strong> (25%)</p>
+            <p>• <strong>Prime Cost:</strong> (36.000 + 30.000) / 120.000 = <strong style="color: var(--success);">55% (Excelente — dentro da meta de 55-60%)</strong></p>
+          </div>
+
+          <div class="formula-box" style="margin-top: 15px;">
+            Margem Bruta (%) = [ (Faturamento Bruto - CMV R$) / Faturamento Bruto ] x 100
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 5: Operação 1 - Pizzaria -->
+    <div class="slide">
+      <div class="slide-header">
+        <h2>Módulo 4: Diagnóstico por Operação</h2>
+        <span class="badge">Pizzaria</span>
+      </div>
+      <div class="slide-body">
+        <div class="content-text">
+          <p><strong>Foco Operacional:</strong> Giro de produção, entrega rápida (Delivery) e padronização rigorosa de insumos nobres (queijos, embutidos).</p>
+          
+          <div class="example-box">
+            <p><strong>Exemplo de KPI - Delivery Lead Time:</strong></p>
+            <p>• Pedido recebido no app: 20:00</p>
+            <p>• Saída para entrega: 20:20 (20 min de forno/embalagem)</p>
+            <p>• Chegada ao cliente: 20:40 → <strong>Tempo Total: 40 min</strong></p>
+            <p>• <strong>Meta:</strong> ≤ 45 min. Acima disso gera reclamações e cancelamentos.</p>
+          </div>
+        </div>
+        <div class="content-media">
+          <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80" alt="Pizzaria">
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 6: Operação 2 - Petiscaria -->
+    <div class="slide">
+      <div class="slide-header">
+        <h2>Módulo 5: Diagnóstico por Operação</h2>
+        <span class="badge">Petiscaria</span>
+      </div>
+      <div class="slide-body">
+        <div class="content-text">
+          <p><strong>Foco Operacional:</strong> Equilíbrio do mix de cardápio (fração de proteína x carboidratos/frituras) e estímulo ao consumo compartilhado em mesa.</p>
+          
+          <div class="example-box">
+            <p><strong>Exemplo de Mix de Cardápio:</strong></p>
+            <p>• Porção de Picanha (Proteína): CMV = <strong>48%</strong> (Margem Baixa)</p>
+            <p>• Porção de Batata/Mandioca (Fritura): CMV = <strong>14%</strong> (Margem Alta)</p>
+            <p>• <strong>Estratégia:</strong> Criar combo variado (Tábua Mista) para balancear o CMV médio da mesa para a meta de <strong>28%</strong>.</p>
+          </div>
+        </div>
+        <div class="content-media">
+          <img src="https://images.unsplash.com/photo-1541544741938-0af808871cc0?auto=format&fit=crop&w=800&q=80" alt="Petiscos de Bar">
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 7: Operação 3 - Bar -->
+    <div class="slide">
+      <div class="slide-header">
+        <h2>Módulo 6: Diagnóstico por Operação</h2>
+        <span class="badge">Bar & Coquetelaria</span>
+      </div>
+      <div class="slide-body">
+        <div class="content-text">
+          <p><strong>Foco Operacional:</strong> Alta rotação de bebidas, altíssima margem no balcão e rígido controle de dosagem/doses para evitar vazamentos.</p>
+
+          <div class="example-box">
+            <p><strong>Exemplo de Controle de Dose:</strong></p>
+            <p>• Garrafa de Gin (750ml): Custo = R$ 90,00</p>
+            <p>• Dose padrão do drink (50ml): Custo da dose = R$ 6,00</p>
+            <p>• Preço de Venda do Drink: R$ 36,00</p>
+            <p>• <strong>CMV do Drink:</strong> (6,00 / 36,00) x 100 = <strong style="color: var(--success);">16,6% (Margem de Bruta de 83,4%)</strong></p>
+          </div>
+        </div>
+        <div class="content-media">
+          <img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=800&q=80" alt="Bar e Drinks">
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 8: Indicadores de Salão e Giro -->
+    <div class="slide">
+      <div class="slide-header">
+        <h2>Módulo 7: Indicadores de Salão e Velocidade</h2>
+        <span class="badge">Giro & Ticket Médio</span>
+      </div>
+      <div class="slide-body" style="flex-direction: column; align-items: stretch;">
+        <div class="content-text">
+          <table>
+            <thead>
+              <tr>
+                <th>KPI</th>
+                <th>Fórmula</th>
+                <th>Exemplo Prático</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Giro de Mesa (Turnover)</strong></td>
+                <td>Total Clientes / Capacidade Assentos</td>
+                <td>200 clientes no dia / 80 assentos = <strong>2,5 giros/dia</strong></td>
+              </tr>
+              <tr>
+                <td><strong>Ticket Médio / Cliente</strong></td>
+                <td>Faturamento / Total de Clientes</td>
+                <td>R$ 12.000,00 / 200 clientes = <strong>R$ 60,00 / cliente</strong></td>
+              </tr>
+              <tr>
+                <td><strong>Tempo de Permanência</strong></td>
+                <td>Horário Saída - Horário Entrada</td>
+                <td>Média de <strong>1h40min</strong> por mesa na Petiscaria aos sábados</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 9: Resumo da Matriz de KPIs -->
+    <div class="slide">
+      <div class="slide-header">
+        <h2>Módulo 8: Matriz Integrada de KPIs</h2>
+        <span class="badge">Tabela Geral</span>
+      </div>
+      <div class="slide-body" style="flex-direction: column; align-items: stretch;">
+        <div class="content-text">
+          <table>
+            <thead>
+              <tr>
+                <th>Indicador</th>
+                <th>Foco de Controle</th>
+                <th>Frequência</th>
+                <th>Meta Típica</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Variação de CMV</strong></td>
+                <td>Desperdício e Furtos</td>
+                <td>Semanal</td>
+                <td>Desvio &lt; 2% do Teórico</td>
+              </tr>
+              <tr>
+                <td><strong>Margem de Contribuição</strong></td>
+                <td>Lucro Variável Real</td>
+                <td>Mensal</td>
+                <td>45% a 55% do Faturamento</td>
+              </tr>
+              <tr>
+                <td><strong>Prime Cost</strong></td>
+                <td>CMV + Mão de Obra</td>
+                <td>Mensal</td>
+                <td>55% a 60% da Receita</td>
+              </tr>
+              <tr>
+                <td><strong>Tempo de Cozinha (KDS)</strong></td>
+                <td>Velocidade do Serviço</td>
+                <td>Diária</td>
+                <td>12 a 18 minutos/prato</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 10: Conclusão -->
+    <div class="slide">
+      <div class="slide-header">
+        <h2>Encerramento</h2>
+        <span class="badge">Próximos Passos</span>
+      </div>
+      <div class="slide-body">
+        <div class="content-text">
+          <h3 style="color: var(--accent); margin-bottom: 15px;">Aplicações no Desenvolvimento do App:</h3>
+          <ul style="margin-left: 20px; line-height: 1.8;">
+            <li>Criar dashboards específicos para cada perfil (Diretor, Gerente de Loja e Chefe de Cozinha).</li>
+            <li>Implementar alertas automáticos quando a variação de CMV ultrapassar 2%.</li>
+            <li>Cadastrar corretamente todas as fichas técnicas para viabilizar os cálculos em tempo real.</li>
+          </ul>
+          <p style="margin-top: 30px; font-weight: bold; color: #fff;">Obrigado!</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Painel de Controle -->
+    <div class="controls">
+      <button class="btn" id="prevBtn" onclick="changeSlide(-1)">Anterior</button>
+      <span class="indicator" id="slideIndicator">Slide 1 de 10</span>
+      <button class="btn" id="nextBtn" onclick="changeSlide(1)">Próximo</button>
+    </div>
+
+  </div>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const indicator = document.getElementById('slideIndicator');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    function updateSlide() {
+      slides.forEach((slide, index) => {
+        slide.classList.toggle('active', index === currentSlide);
+      });
+      indicator.textContent = `Slide ${currentSlide + 1} de ${slides.length}`;
+      
+      prevBtn.disabled = currentSlide === 0;
+      nextBtn.disabled = currentSlide === slides.length - 1;
+    }
+
+    function changeSlide(direction) {
+      currentSlide += direction;
+      if (currentSlide < 0) currentSlide = 0;
+      if (currentSlide >= slides.length) currentSlide = slides.length - 1;
+      updateSlide();
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') changeSlide(1);
+      if (e.key === 'ArrowLeft') changeSlide(-1);
+    });
+
+    // Inicializa
+    updateSlide();
+  </script>
+
+</body>
+</html>
